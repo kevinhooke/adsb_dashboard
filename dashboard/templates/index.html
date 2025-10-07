@@ -1,0 +1,11 @@
+<html>
+    <body>
+        {% if latest_sbs_messages %}
+            {% for message in latest_sbs_messages %}
+                <li>{{ message.date_message_generated}} {{ message.time_message_generated}} : {{ message.hex_ident }} / {{ message.flight_id }}</li>
+            {% endfor %}
+        {% else %}
+            <p>No data found</p>
+        {% endif %}
+    </body>
+</html>

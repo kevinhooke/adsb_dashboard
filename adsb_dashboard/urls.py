@@ -16,8 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from dashboard import views
+from rest_framework import routers
+from debug_toolbar.toolbar import debug_toolbar_urls
+from rest_framework.urlpatterns import format_suffix_patterns
+
+#replaced router approach
+#router = routers.DefaultRouter()
+#router.register('sbsmessage', views.SBSMessageViewSet)
 
 urlpatterns = [
+    # replaced, doesn't seem to work
+    #path('api/', include(router.urls)),
+    path('api/sbsmessage/', views.SBSMessageList.as_view()),
+    path('api/sbsmessage/<int:pk>/', views.SBSMessageDetail.as_view()),
     path('admin/', admin.site.urls),
     path("dashboard/", include("dashboard.urls")),
-]
+] + debug_toolbar_urls()
+
+urlpatterns = format_suffix_patterns(urlpatterns)
