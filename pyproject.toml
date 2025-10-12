@@ -11,9 +11,14 @@ dependencies = [
     "django (>=5.2.6,<6.0.0)",
     "djangorestframework (>=3.16.1,<4.0.0)",
     "django-debug-toolbar (>=6.0.0,<7.0.0)",
-    "drf-api-logger (>=1.1.21,<2.0.0)"
+    "drf-api-logger (>=1.1.21,<2.0.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)",
+    "python-environ (>=0.4.54,<0.5.0)",
 ]
 
+[tool.poetry.dependencies.psycopg]
+extras = [ "binary" ]
+version = "^3.1.9"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

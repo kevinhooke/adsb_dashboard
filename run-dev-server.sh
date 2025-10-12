@@ -1,1 +1,2 @@
-poetry run python3 manage.py runserver
+export DB_PASSWORD=[YOUR-DB-PASSWORD]
+docker compose up
