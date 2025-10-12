@@ -1,6 +1,8 @@
 services:
 
   django-db-migrate:
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
     build:
       context: .
     command: ["poetry", "run", "python", "manage.py", "migrate"]
@@ -8,6 +10,8 @@ services:
       - db
 
   web:
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
     build:
       context: .
     ports:

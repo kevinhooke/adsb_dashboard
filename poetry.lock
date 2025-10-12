@@ -102,17 +102,6 @@ bleach = ">=3.1.5"
 djangorestframework = ">=3.7.4"
 
 [[package]]
-name = "environ"
-version = "1.0"
-description = "Stack Based Globals Management"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "environ-1.0.tar.gz", hash = "sha256:4df7f1dfeb7d1c988d2e19a8bd5d547a526e0400aeb35adf732032472f35dcb0"},
-]
-
-[[package]]
 name = "psycopg2"
 version = "2.9.10"
 description = "psycopg2 - Python-PostgreSQL Database Adapter"
@@ -130,6 +119,17 @@ files = [
     {file = "psycopg2-2.9.10-cp39-cp39-win32.whl", hash = "sha256:9d5b3b94b79a844a986d029eee38998232451119ad653aea42bb9220a8c5066b"},
     {file = "psycopg2-2.9.10-cp39-cp39-win_amd64.whl", hash = "sha256:88138c8dedcbfa96408023ea2b0c369eda40fe5d75002c0964c78f46f11fa442"},
     {file = "psycopg2-2.9.10.tar.gz", hash = "sha256:12ec0b40b0273f95296233e8750441339298e6a572f7039da5b260e3c8b60e11"},
+]
+
+[[package]]
+name = "python-environ"
+version = "0.4.54"
+description = "Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application."
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "python-environ-0.4.54.tar.gz", hash = "sha256:6249a14057f95aba3b4906d73276f770e01e659f8098b3f3b34295feac42865b"},
 ]
 
 [[package]]
@@ -176,4 +176,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "921ab45ee102bc5b1be339c994b592d23e052bc79f2a8bca4a122894d7b081a5"
+content-hash = "dbe84f04d7a9b352ea0f65ff87aa492c0ebb3cf6f2ed7be3e39c5888b374fee7"
