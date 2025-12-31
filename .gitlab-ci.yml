@@ -3,3 +3,7 @@ default:
     - docker
   before_script:
     - docker info
+
+build_image:
+  script:
+    - docker build -t adsb-dashboard .
