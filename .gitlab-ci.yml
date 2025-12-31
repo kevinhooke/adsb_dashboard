@@ -4,8 +4,8 @@ default:
   image: docker:24.0.5-cli
   services:
     - docker:24.0.5-dind
-  before_script:
-    - docker info
+#  before_script:
+#    - docker info
 
 build_image:
   script:
