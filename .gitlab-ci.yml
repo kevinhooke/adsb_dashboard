@@ -1,0 +1,5 @@
+default:
+  tags:
+    - docker
+  before_script:
+    - docker info
