@@ -10,5 +10,5 @@ default:
 build_image:
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login registry.gitlab.homelab.kevinhooke.com -u $CI_REGISTRY_USER --password-stdin
-    - docker build -t CI_REGISTRY_IMAGE:latest .
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:latest
