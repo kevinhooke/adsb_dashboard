@@ -9,6 +9,9 @@ default:
 
 build_image:
   script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login registry.gitlab.homelab.kevinhooke.com -u $CI_REGISTRY_USER --password-stdin
-    - docker build -t $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:latest
+  #  - echo "$CI_REGISTRY_PASSWORD" | docker login registry.gitlab.homelab.kevinhooke.com -u $CI_REGISTRY_USER --password-stdin
+  #  - docker build -t $CI_REGISTRY_IMAGE:latest .
+  #  - docker push $CI_REGISTRY_IMAGE:latest
+  # tag and push to local docker registry
+  - docker build -t 10.0.10.3:5000/adsb-dashboard:latest .
+  - docker push 10.0.10.3:5000/adsb-dashboard:latest
