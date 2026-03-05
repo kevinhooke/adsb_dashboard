@@ -1,10 +1,37 @@
+{% load static %}
 <html>
+    <head>
+        <link rel="stylesheet" href="{% static 'pico-main/css/pico.min.css' %}">
+    </head>
     <body>
         <h2>Last messages received</h2>
         {% if latest_sbs_messages %}
+            <table>
+                <thead>
+                    <th>Date/time received</th>
+                    <th>hex id</th>
+                    <th>Callsign</th>
+                    <th>Squawk</th>
+                    <th>Altitude</th>
+                    <th>Track</th>
+                    <th>Ground spped</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </thead>
             {% for message in latest_sbs_messages %}
-                <li>{{ message.date_message_generated}} {{ message.time_message_generated}} : {{ message.hex_ident }} / {{ message.callsign }} / {{ message.squawk }}</li>
+                <tr>
+                    <td>{{ message.date_message_generated}} {{ message.time_message_generated}}</td>
+                    <td>{{ message.hex_ident }}</td>
+                    <td>{{ message.callsign }}</td>
+                    <td>{{ message.squawk }}</td>
+                    <td>{{ message.altitude }}</td>
+                    <td>{{ message.track }}</td>
+                    <td>{{ message.ground_speed }}</td>
+                    <td>{{ message.latitude }}</td>
+                    <td>{{ message.longitude }}</td>
+                </tr>
             {% endfor %}
+            </table>
         {% else %}
             <p>No data found</p>
         {% endif %}

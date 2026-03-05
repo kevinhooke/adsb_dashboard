@@ -7,11 +7,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+from django.db.models import Q
 from datetime import date
 from .models import SBSMessage
 
 def index(request):
-    latest_sbs_messages = SBSMessage.objects.order_by("date_message_generated")[:60]
+    # filter by transmission_type 3 or 4 for now (messages have more info)
+    latest_sbs_messages = SBSMessage.objects \
+        .filter(Q(transmission_type = 3) | Q(transmission_type = 4)) \
+        .order_by("-date_message_generated", "-time_message_generated")[:60]
     template = loader.get_template("index.html")
     context = {"latest_sbs_messages": latest_sbs_messages}
     return HttpResponse(template.render(context, request))
