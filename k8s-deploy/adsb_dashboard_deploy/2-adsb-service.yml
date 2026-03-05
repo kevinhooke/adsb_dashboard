@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adsb-dashboard-service
+  labels: 
+    app: adsb-dashboard
+spec:
+  selector:
+      app: adsb-dashboard
+  ports:
+    - name: adsb-dashboard-service
+      port: 8000
+      protocol: TCP
+      targetPort: 8000

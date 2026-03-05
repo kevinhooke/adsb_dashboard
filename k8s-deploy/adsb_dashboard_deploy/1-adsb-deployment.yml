@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adsb-dashboard
+  labels:
+    app: adsb-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adsb-dashboard
+  template:
+    metadata:
+      labels:
+        app: adsb-dashboard
+    spec:
+      containers:
+        - name: adsb-dashboard
+          image: 10.0.10.3:5000/adsb-dashboard:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
