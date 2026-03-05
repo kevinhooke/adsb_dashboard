@@ -11,9 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import environ
-
-env = environ.Env()
+from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -97,7 +95,7 @@ DATABASES = {
         'HOST': 'postgres',
         'NAME': 'postgresdb',
         'USER': 'admin',
-        'PASSWORD': env("DB_PASSWORD")
+        'PASSWORD': environ['DB_PASSWORD']
     }
 }
 
