@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "192.168.4.145",
     "10.0.10.100",
+    "adsb.vlan10"
 ]
 
 
