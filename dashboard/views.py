@@ -7,11 +7,20 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+from datetime import date
 from .models import SBSMessage
 
 def index(request):
-    latest_sbs_messages = SBSMessage.objects.order_by("-date_message_generated")[:20]
+    latest_sbs_messages = SBSMessage.objects.order_by("date_message_generated")[:60]
     template = loader.get_template("index.html")
+    context = {"latest_sbs_messages": latest_sbs_messages}
+    return HttpResponse(template.render(context, request))
+
+def heardOnDate(request):
+    latest_sbs_messages = SBSMessage.objects.filter(date_message_generated = date.today()) \
+        .order_by("hex_ident", "-date_message_generated") \
+        .distinct("hex_ident")[:20]
+    template = loader.get_template("planesByDate.html")
     context = {"latest_sbs_messages": latest_sbs_messages}
     return HttpResponse(template.render(context, request))
 
