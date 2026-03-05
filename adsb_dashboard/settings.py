@@ -94,9 +94,9 @@ DATABASES = {
         #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'db',
-        'NAME': 'adsb-dashboard',
-        'USER': 'adsb',
+        'HOST': 'postgres',
+        'NAME': 'postgresdb',
+        'USER': 'admin',
         'PASSWORD': env("DB_PASSWORD")
     }
 }

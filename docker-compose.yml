@@ -7,7 +7,7 @@ services:
       context: .
     command: ["poetry", "run", "python", "manage.py", "migrate"]
     depends_on:
-      - db
+      - postgres
 
   web:
     environment:
@@ -17,13 +17,13 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - db
+      - postgres
 
-  db:
+  postgres:
     image: postgres:18.0
     environment:
-      POSTGRES_DB: adsb-dashboard
-      POSTGRES_USER: adsb
+      POSTGRES_DB: postgresdb
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - 5432:5432
