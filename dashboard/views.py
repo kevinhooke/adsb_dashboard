@@ -22,11 +22,20 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def heard_on_date(request):
-    latest_sbs_messages = SBSMessage.objects.filter(date_message_generated = date.today()) \
-        .order_by("hex_ident", "-date_message_generated") \
-        .distinct("hex_ident")[:20]
     template = loader.get_template("planesByDate.html")
-    context = {"latest_sbs_messages": latest_sbs_messages}
+    context = {}
+    if(request.POST):
+        submitted_date = request.POST['selecteddate']
+        if(submitted_date != None):
+            latest_sbs_messages = SBSMessage.objects \
+                .filter(Q(date_message_generated = submitted_date) & Q(transmission_type = '1')) \
+                .distinct("hex_ident")
+            
+            sbs_messages_ordered = sorted(latest_sbs_messages, key=operator.attrgetter('time_message_generated'), reverse=True)
+            context = {
+                "latest_sbs_messages": sbs_messages_ordered,
+                "selected_date": submitted_date
+            }
     return HttpResponse(template.render(context, request))
 
 def heard_today(request):
@@ -35,7 +44,7 @@ def heard_today(request):
     today = datetime.now().date()
 
     sbs_messages = SBSMessage.objects \
-        .filter(Q(date_message_generated = today) ) \
+        .filter(Q(date_message_generated = today) & Q(transmission_type = '1')) \
         .distinct("hex_ident")
     
     sbs_messages_ordered = sorted(sbs_messages, key=operator.attrgetter('time_message_generated'), reverse=True)
