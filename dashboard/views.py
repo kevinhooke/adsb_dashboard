@@ -10,6 +10,7 @@ from django.http import Http404
 from django.db.models import Q
 from datetime import date, datetime
 from .models import SBSMessage
+import operator
 
 def index(request):
     # filter by transmission_type 3 or 4 for now (messages have more info)
@@ -35,11 +36,12 @@ def heard_today(request):
 
     sbs_messages = SBSMessage.objects \
         .filter(Q(date_message_generated = today) ) \
-        .order_by("hex_ident", "-date_message_generated", "-time_message_generated") \
         .distinct("hex_ident")
-        
+    
+    sbs_messages_ordered = sorted(sbs_messages, key=operator.attrgetter('time_message_generated'), reverse=True)
+
     template = loader.get_template("today.html")
-    context = {"latest_sbs_messages": sbs_messages}
+    context = {"latest_sbs_messages": sbs_messages_ordered}
     return HttpResponse(template.render(context, request))
 
 # todo doesn't work as expected? replaced with APIVIew
