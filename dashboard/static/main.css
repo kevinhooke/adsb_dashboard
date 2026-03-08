@@ -1,0 +1,11 @@
+.row {
+  display: flex;
+}
+
+.leftnav_column {
+  flex: 20%;
+}
+
+.main_column {
+  flex: 80%;
+}
