@@ -1,12 +1,24 @@
+{% load static %}
 <html>
+    <head>
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+        <link rel="stylesheet" href="{% static 'pico-main/css/pico.min.css' %}">
+    </head>
     <body>
-        <h2>Planes heard on: [date here]</h2>
-        {% if latest_sbs_messages %}
-            {% for message in latest_sbs_messages %}
-                <li>{{ message.date_message_generated}} {{ message.time_message_generated}} : {{ message.hex_ident }} / {{ message.callsign }} / {{ message.squawk }}</li>
-            {% endfor %}
-        {% else %}
-            <p>No data found</p>
-        {% endif %}
+        <div class="row">
+            <div class="leftnav_column">
+                {% include "includes/leftnav.html" %}
+            </div>
+            <div class="main_column">
+            <h2>Planes heard on: [date here]</h2>
+                {% if latest_sbs_messages %}
+                    {% for message in latest_sbs_messages %}
+                        <li>{{ message.date_message_generated}} {{ message.time_message_generated}} : {{ message.hex_ident }} / {{ message.callsign }} / {{ message.squawk }}</li>
+                    {% endfor %}
+                {% else %}
+                    <p>No data found</p>
+                {% endif %}
+            </div>
+        </div>
     </body>
 </html>
