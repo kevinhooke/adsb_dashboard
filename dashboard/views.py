@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
 from django.db.models import Q
-from datetime import date
+from datetime import date, datetime
 from .models import SBSMessage
 
 def index(request):
@@ -20,12 +20,26 @@ def index(request):
     context = {"latest_sbs_messages": latest_sbs_messages}
     return HttpResponse(template.render(context, request))
 
-def heardOnDate(request):
+def heard_on_date(request):
     latest_sbs_messages = SBSMessage.objects.filter(date_message_generated = date.today()) \
         .order_by("hex_ident", "-date_message_generated") \
         .distinct("hex_ident")[:20]
     template = loader.get_template("planesByDate.html")
     context = {"latest_sbs_messages": latest_sbs_messages}
+    return HttpResponse(template.render(context, request))
+
+def heard_today(request):
+    """ display plans heard today, in descending dat/time order"""
+
+    today = datetime.now().date()
+
+    sbs_messages = SBSMessage.objects \
+        .filter(Q(date_message_generated = today) ) \
+        .order_by("hex_ident", "-date_message_generated", "-time_message_generated") \
+        .distinct("hex_ident")
+        
+    template = loader.get_template("today.html")
+    context = {"latest_sbs_messages": sbs_messages}
     return HttpResponse(template.render(context, request))
 
 # todo doesn't work as expected? replaced with APIVIew
