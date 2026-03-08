@@ -1,0 +1,39 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+        <link rel="stylesheet" href="{% static 'pico-main/css/pico.min.css' %}">
+    </head>
+    <body>
+        <div class="row">
+            <div class="leftnav_column">
+                {% include "includes/leftnav.html" %}
+            </div>
+            <div class="main_column">
+
+                <h2>Heard today</h2>
+                    {% if latest_sbs_messages %}
+                        <table>
+                            <thead>
+                                <th>Date/time received</th>
+                                <th>hex id</th>
+                                <th>Callsign</th>
+                                <th>Squawk</th>
+                            </thead>
+                        {% for message in latest_sbs_messages %}
+                            <tr>
+                                <td>{{ message.date_message_generated}} {{ message.time_message_generated}}</td>
+                                <td>{{ message.hex_ident }}</td>
+                                <td>{{ message.callsign }}</td>
+                                <td>{{ message.squawk }}</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                    {% else %}
+                        <p>No data found</p>
+                    {% endif %}
+
+            </div>
+        </div>
+    </body>
+</html>
