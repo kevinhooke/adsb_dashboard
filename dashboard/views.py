@@ -28,7 +28,8 @@ def heard_on_date(request):
         submitted_date = request.POST['selecteddate']
         if(submitted_date != None):
             latest_sbs_messages = SBSMessage.objects \
-                .filter(Q(date_message_generated = submitted_date) & Q(transmission_type = '1')) \
+                .filter(Q(date_message_generated = submitted_date) & \
+                        (Q(transmission_type = '1') | Q(transmission_type = '5'))) \
                 .distinct("hex_ident")
             
             sbs_messages_ordered = sorted(latest_sbs_messages, key=operator.attrgetter('time_message_generated'), reverse=True)
@@ -44,7 +45,8 @@ def heard_today(request):
     today = datetime.now().date()
 
     sbs_messages = SBSMessage.objects \
-        .filter(Q(date_message_generated = today) & Q(transmission_type = '1')) \
+        .filter(Q(date_message_generated = today) & \
+        (Q(transmission_type = '1') | Q(transmission_type = '5'))) \
         .distinct("hex_ident")
     
     sbs_messages_ordered = sorted(sbs_messages, key=operator.attrgetter('time_message_generated'), reverse=True)
