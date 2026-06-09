@@ -7,9 +7,10 @@ ADSB data from PiAware running on a Raspberry Pi.
 
 This dashboard requires the following:
 
-- PiAware (or similar dum1090) running on your network and receiving ADSB signals
-- dump1090kafkaproducer running locally, consuming the feed on port 30003
-from PiAware
+- [PiAware](https://uk.flightaware.com/adsb/piaware/) (or similar dump1090)
+running on your network and receiving ADSB signals
+- [dump1090kafkaproducer](https://github.com/kevinhooke/dump1090kafkaproducer/tree/master)
+running locally, consuming the feed on port 30003 from PiAware
 
 Configure dump1090kafkaproducer to POST data to adbs-dashboard by changing
 app.properties:
