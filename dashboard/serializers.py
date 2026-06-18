@@ -1,6 +1,7 @@
-from .models import SBSMessage
 from rest_framework import serializers
-from rest_framework.response import Response
+
+from .models import SBSMessage
+
 
 class SBSMessageSerializer(serializers.Serializer):
     message_type = serializers.CharField()
@@ -23,10 +24,10 @@ class SBSMessageSerializer(serializers.Serializer):
     emergency = serializers.CharField(required=False, allow_blank=True)
     spi = serializers.CharField(required=False, allow_blank=True)
     on_ground = serializers.CharField(required=False, allow_blank=True)
-    #code = serializers.CharField(style={'base_template': 'textarea.html'})
-    #linenos = serializers.BooleanField(required=False)
-    #language = serializers.ChoiceField(choices=LANGUAGE_CHOICES, default='python')
-    #style = serializers.ChoiceField(choices=STYLE_CHOICES, default='friendly')
+    # code = serializers.CharField(style={'base_template': 'textarea.html'})
+    # linenos = serializers.BooleanField(required=False)
+    # language = serializers.ChoiceField(choices=LANGUAGE_CHOICES, default='python')
+    # style = serializers.ChoiceField(choices=STYLE_CHOICES, default='friendly')
 
     def create(self, validated_data):
         """
@@ -46,7 +47,8 @@ class SBSMessageSerializer(serializers.Serializer):
     #     instance.save()
     #     return instance
 
-#didn't work
+
+# didn't work
 # class SBSMessageSerializer(serializers.HyperlinkedModelSerializer):
 #     class Meta:
 #         model = SBSMessage
@@ -74,7 +76,7 @@ class SBSMessageSerializer(serializers.Serializer):
 #             'spi',
 #             'on_ground'
 #         ]
-    
+
 #     def create(self, request):
 #         post_data = request
 #         print("Received request: ")

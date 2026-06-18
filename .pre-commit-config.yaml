@@ -1,0 +1,23 @@
+repos:
+  # Uses Black for automatic formatting
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        args: ["--line-length", "120"]
+
+  # Uses isort for import sorting
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  # Uses Flake8 for basic linting
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        # Exclude files that don't need checking (like virtual environment folders)
+        exclude: 'venv/'
+        args: ["--max-line-length", "120"]

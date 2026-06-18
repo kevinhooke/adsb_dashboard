@@ -1,59 +1,65 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
-from rest_framework import permissions, viewsets
-from dashboard.serializers import SBSMessageSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.http import Http404
-from django.db.models import Q
-from datetime import date, datetime
-from .models import SBSMessage
 import operator
+from datetime import datetime
+
+from django.db.models import Q
+from django.http import Http404, HttpResponse
+from django.template import loader
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from dashboard.serializers import SBSMessageSerializer
+
+from .models import SBSMessage
+
 
 def index(request):
     # filter by transmission_type 3 or 4 for now (messages have more info)
-    latest_sbs_messages = SBSMessage.objects \
-        .filter(Q(transmission_type = 3) | Q(transmission_type = 4)) \
-        .order_by("-date_message_generated", "-time_message_generated")[:60]
+    latest_sbs_messages = SBSMessage.objects.filter(Q(transmission_type=3) | Q(transmission_type=4)).order_by(
+        "-date_message_generated", "-time_message_generated"
+    )[:60]
     template = loader.get_template("index.html")
     context = {"latest_sbs_messages": latest_sbs_messages}
     return HttpResponse(template.render(context, request))
 
+
 def heard_on_date(request):
     template = loader.get_template("planesByDate.html")
     context = {}
-    if(request.POST):
-        submitted_date = request.POST['selecteddate']
-        if(submitted_date != None):
-            latest_sbs_messages = SBSMessage.objects \
-                .filter(Q(date_message_generated = submitted_date) & \
-                        (Q(transmission_type = '1') | Q(transmission_type = '5'))) \
-                .distinct("hex_ident")
-            
-            sbs_messages_ordered = sorted(latest_sbs_messages, key=operator.attrgetter('time_message_generated'), reverse=True)
+    if request.POST:
+        submitted_date = request.POST["selecteddate"]
+        if submitted_date is not None:
+            latest_sbs_messages = SBSMessage.objects.filter(
+                Q(date_message_generated=submitted_date) & (Q(transmission_type="1") | Q(transmission_type="5"))
+            ).distinct("hex_ident")
+
+            sbs_messages_ordered = sorted(
+                latest_sbs_messages,
+                key=operator.attrgetter("time_message_generated"),
+                reverse=True,
+            )
             context = {
                 "latest_sbs_messages": sbs_messages_ordered,
-                "selected_date": submitted_date
+                "selected_date": submitted_date,
             }
     return HttpResponse(template.render(context, request))
 
+
 def heard_today(request):
-    """ display plans heard today, in descending dat/time order"""
+    """display plans heard today, in descending dat/time order"""
 
     today = datetime.now().date()
 
-    sbs_messages = SBSMessage.objects \
-        .filter(Q(date_message_generated = today) & \
-        (Q(transmission_type = '1') | Q(transmission_type = '5'))) \
-        .distinct("hex_ident")
-    
-    sbs_messages_ordered = sorted(sbs_messages, key=operator.attrgetter('time_message_generated'), reverse=True)
+    sbs_messages = SBSMessage.objects.filter(
+        Q(date_message_generated=today) & (Q(transmission_type="1") | Q(transmission_type="5"))
+    ).distinct("hex_ident")
+
+    sbs_messages_ordered = sorted(sbs_messages, key=operator.attrgetter("time_message_generated"), reverse=True)
 
     template = loader.get_template("today.html")
     context = {"latest_sbs_messages": sbs_messages_ordered}
     return HttpResponse(template.render(context, request))
+
 
 # todo doesn't work as expected? replaced with APIVIew
 # class SBSMessageViewSet(viewsets.ModelViewSet):
@@ -64,10 +70,12 @@ def heard_today(request):
 #     serializer_class = SBSMessageSerializer
 #     #permission_classes = [permissions.IsAuthenticated]
 
+
 class SBSMessageList(APIView):
     """
     List all SBSMessages, or create a new SBSMessage.
     """
+
     def get(self, request, format=None):
         msg = SBSMessage.objects.all()
         serializer = SBSMessageSerializer(msg, many=True)
@@ -89,10 +97,12 @@ class SBSMessageList(APIView):
             print("SBSMessageList.post() is_valid : false")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class SBSMessageDetail(APIView):
     """
     Retrieve, update or delete a SBSMessage instance.
     """
+
     def get_object(self, pk):
         try:
             return SBSMessage.objects.get(pk=pk)
