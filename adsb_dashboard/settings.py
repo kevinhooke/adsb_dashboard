@@ -89,12 +89,10 @@ WSGI_APPLICATION = "adsb_dashboard.wsgi.application"
 
 DATABASES = {
     "default": {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": "10.0.10.5",
-        "NAME": "adsb_dashboard",
-        "USER": "admin",
+        "HOST": environ.get("DB_HOST", "postgres"),
+        "NAME": environ.get("DB_NAME", "adsb_dashboard"),
+        "USER": environ.get("DB_USER", "admin"),
         "PASSWORD": environ["DB_PASSWORD"],
     }
 }

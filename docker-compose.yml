@@ -3,6 +3,8 @@ services:
   django-db-migrate:
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: postgres
+      DB_NAME: postgresdb
     build:
       context: .
     command: ["poetry", "run", "python", "manage.py", "migrate"]
@@ -12,6 +14,8 @@ services:
   web:
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: postgres
+      DB_NAME: postgresdb
     build:
       context: .
     ports:

@@ -3,6 +3,8 @@ services:
   django-db-migrate:
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST:-10.0.10.5}
+      DB_NAME: ${DB_NAME:-adsb_dashboard}
     build:
       context: .
     command: ["poetry", "run", "python", "manage.py", "migrate"]
@@ -10,6 +12,8 @@ services:
   web:
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST:-10.0.10.5}
+      DB_NAME: ${DB_NAME:-adsb_dashboard}
     build:
       context: .
     ports:
