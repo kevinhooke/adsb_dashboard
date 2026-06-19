@@ -16,17 +16,18 @@ build_image:
   - docker build -t 10.0.10.3:5000/adsb-dashboard:latest .
   - docker push 10.0.10.3:5000/adsb-dashboard:latest
 
-configure-dev-context:
-  stage: deploy
-  image: docker:latest
-  script:
-    - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3"
-    - docker context use remote
-    - docker context ls
+# configure-dev-context:
+#   stage: deploy
+#   image: docker:latest
+#   script:
+#     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3"
+#     - docker context use remote
+#     - docker context ls
 
 deploy:
   stage: deploy
   image: docker:latest
   script:
+    - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3" 
     - docker context use remote
     - docker compose up -d -f docker-compose-remote-db.yml
