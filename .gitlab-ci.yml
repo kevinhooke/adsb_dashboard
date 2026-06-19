@@ -17,7 +17,7 @@ build_image:
   - docker push 10.0.10.3:5000/adsb-dashboard:latest
 
 confingure-dev-context:
-  stage: dev-context
+  stage: deploy
   image: docker:latest
   script:
     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3"
