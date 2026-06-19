@@ -1,21 +1,19 @@
 services:
 
   django-db-migrate:
+    image: 10.0.10.3:5000/adsb-dashboard:latest
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: ${DB_HOST:-10.0.10.5}
       DB_NAME: ${DB_NAME:-adsb_dashboard}
-    build:
-      context: .
     command: ["poetry", "run", "python", "manage.py", "migrate"]
 
   web:
+    image: 10.0.10.3:5000/adsb-dashboard:latest
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: ${DB_HOST:-10.0.10.5}
       DB_NAME: ${DB_NAME:-adsb_dashboard}
-    build:
-      context: .
     ports:
       - 8000:8000
     depends_on:
