@@ -16,7 +16,7 @@ build_image:
   - docker build -t 10.0.10.3:5000/adsb-dashboard:latest .
   - docker push 10.0.10.3:5000/adsb-dashboard:latest
 
-confingure-dev-context:
+configure-dev-context:
   stage: deploy
   image: docker:latest
   script:
@@ -29,4 +29,4 @@ deploy:
   image: docker:latest
   script:
     - docker context use remote
-    - docker-compose up -d -f docker-compose-remote-db.yml
+    - docker compose up -d -f docker-compose-remote-db.yml
