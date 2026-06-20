@@ -30,4 +30,5 @@ deploy:
   script:
     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3" 
     - docker context use remote
+    # temp remove -d to see service start up - ut this back later
     - docker compose -f docker-compose-remote-db.yml up -d
