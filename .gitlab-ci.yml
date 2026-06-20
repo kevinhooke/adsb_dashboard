@@ -28,6 +28,10 @@ deploy:
   stage: deploy
   image: docker:latest
   script:
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3" 
     - docker context use remote
     # temp remove -d to see service start up - ut this back later
