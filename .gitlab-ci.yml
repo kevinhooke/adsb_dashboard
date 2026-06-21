@@ -32,11 +32,9 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - touch ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
     - touch ~/.ssh/known_hosts
     - chmod -R 400 ~/.ssh
     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3" 
-  # alternative 2 - deploy using docker-runner on the remote host
-  #tags:
-  #  - remote-docker-host        # tag that selects the runner on 10.0.10.3
   script:
     - docker --context remote compose -f docker-compose-remote-db.yml up -d --pull always
