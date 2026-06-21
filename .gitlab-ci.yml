@@ -27,12 +27,16 @@ build_image:
 deploy:
   stage: deploy
   image: docker:latest
-  script:
+  before_script:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3" 
-    - docker context use remote
-    # temp remove -d to see service start up - ut this back later
-    - docker --context remote compose -f docker-compose-remote-db.yml up --pull always
+  # alternative 2 - deploy using docker-runner on the remote host
+  #tags:
+  #  - remote-docker-host        # tag that selects the runner on 10.0.10.3
+  script:
+    - docker --context remote compose -f docker-compose-remote-db.yml up -d --pull always
