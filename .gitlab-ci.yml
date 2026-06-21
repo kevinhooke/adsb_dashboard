@@ -26,7 +26,7 @@ build_image:
 
 deploy:
   stage: deploy
-  image: docker:latest
+  #image: docker:latest
   before_script:
     - apt-get update -y && apt-get install openssh-client -y
     - mkdir -p ~/.ssh
