@@ -38,7 +38,7 @@ COPY . /app/
 RUN poetry install --no-root
 
 # Expose the Django port
-EXPOSE 8001
+EXPOSE 8000
  
 # Run Django’s development server
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8001"]
+CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
