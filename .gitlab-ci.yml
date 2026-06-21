@@ -28,10 +28,12 @@ deploy:
   stage: deploy
   #image: docker:latest
   before_script:
-    - chmod 400 "$SSH_PRIVATE_KEY"
-    - ssh-add "$SSH_PRIVATE_KEY"
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
+    - touch ~/.ssh/config
+    - touch ~/.ssh/known_hosts
+    - chmod -R 400 ~/.ssh
     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3" 
   # alternative 2 - deploy using docker-runner on the remote host
   #tags:
