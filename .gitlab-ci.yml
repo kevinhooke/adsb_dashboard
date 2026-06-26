@@ -4,29 +4,15 @@ default:
   image: docker:29.1.3-cli
   services:
     - docker:29.1.3-dind
-#  before_script:
-#    - docker info
 
 build_image:
   script:
-  #  - echo "$CI_REGISTRY_PASSWORD" | docker login registry.gitlab.homelab.kevinhooke.com -u $CI_REGISTRY_USER --password-stdin
-  #  - docker build -t $CI_REGISTRY_IMAGE:latest .
-  #  - docker push $CI_REGISTRY_IMAGE:latest
   # tag and push to local docker registry
-  - docker build -t 10.0.10.3:5000/adsb-dashboard:latest .
-  - docker push 10.0.10.3:5000/adsb-dashboard:latest
-
-# configure-dev-context:
-#   stage: deploy
-#   image: docker:latest
-#   script:
-#     - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3"
-#     - docker context use remote
-#     - docker context ls
+  - docker build -t 10.0.10.2:5000/adsb-dashboard:latest .
+  - docker push 10.0.10.2:5000/adsb-dashboard:latest
 
 deploy:
   stage: deploy
-  #image: docker:latest
   before_script:
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
@@ -35,6 +21,6 @@ deploy:
     - echo "StrictHostKeyChecking no" >> ~/.ssh/config
     - touch ~/.ssh/known_hosts
     - chmod -R 400 ~/.ssh
-    - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.3" 
+    - docker context create remote --docker "host=ssh://gitlab-runner@10.0.10.2" 
   script:
     - docker --context remote compose -f docker-compose-remote-db.yml up -d --pull always
