@@ -12,7 +12,7 @@
             <div class="main_column">
 
                 <h2>Last messages received</h2>
-                    {% if latest_sbs_messages %}
+                    {% if page_obj %}
                         <table>
                             <thead>
                                 <th>Date/time received</th>
@@ -25,7 +25,7 @@
                                 <th>Latitude</th>
                                 <th>Longitude</th>
                             </thead>
-                        {% for message in latest_sbs_messages %}
+                        {% for message in page_obj %}
                             <tr>
                                 <td>{{ message.date_message_generated}} {{ message.time_message_generated}}</td>
                                 <td>{{ message.hex_ident }}</td>
@@ -39,6 +39,15 @@
                             </tr>
                         {% endfor %}
                         </table>
+                        <nav>
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            {% endif %}
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                            {% endif %}
+                        </nav>
                     {% else %}
                         <p>No data found</p>
                     {% endif %}

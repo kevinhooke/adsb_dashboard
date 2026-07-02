@@ -1,6 +1,7 @@
 import operator
 from datetime import datetime
 
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.template import loader
@@ -15,11 +16,14 @@ from .models import SBSMessage
 
 def index(request):
     # filter by transmission_type 3 or 4 for now (messages have more info)
-    latest_sbs_messages = SBSMessage.objects.filter(Q(transmission_type=3) | Q(transmission_type=4)).order_by(
+    qs = SBSMessage.objects.filter(Q(transmission_type=3) | Q(transmission_type=4)).order_by(
         "-date_message_generated", "-time_message_generated"
-    )[:60]
+    )
+    # paginate the results
+    paginator = Paginator(qs, 20)
+    page_obj = paginator.get_page(request.GET.get("page", 1))
     template = loader.get_template("index.html")
-    context = {"latest_sbs_messages": latest_sbs_messages}
+    context = {"page_obj": page_obj}
     return HttpResponse(template.render(context, request))
 
 
