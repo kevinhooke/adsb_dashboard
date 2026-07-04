@@ -16,6 +16,7 @@ services:
       DB_NAME: ${DB_NAME:-adsb_dashboard}
     ports:
       - 8001:8001
+    restart: unless-stopped
     depends_on:
       django-db-migrate:
         condition: service_completed_successfully
