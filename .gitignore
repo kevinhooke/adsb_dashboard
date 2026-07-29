@@ -1,3 +1,7 @@
+.DS_Store
+**/.DS_Store
 **/__pycache__
 run-dev-server.sh-kh
 db.sqlite3
+dashboard/static/pico-main
+adsb_dashboard/settings.py

@@ -24,10 +24,8 @@ class SBSMessageSerializer(serializers.Serializer):
     emergency = serializers.CharField(required=False, allow_blank=True)
     spi = serializers.CharField(required=False, allow_blank=True)
     on_ground = serializers.CharField(required=False, allow_blank=True)
-    # code = serializers.CharField(style={'base_template': 'textarea.html'})
-    # linenos = serializers.BooleanField(required=False)
-    # language = serializers.ChoiceField(choices=LANGUAGE_CHOICES, default='python')
-    # style = serializers.ChoiceField(choices=STYLE_CHOICES, default='friendly')
+    aircraft_type = serializers.CharField(required=False, allow_blank=True)
+    aircraft_full_type = serializers.CharField(required=False, allow_blank=True)
 
     def create(self, validated_data):
         """

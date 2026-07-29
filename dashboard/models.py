@@ -68,3 +68,7 @@ class SBSMessage(models.Model):
 
     # 21
     on_ground = models.CharField(max_length=1, blank=True, default="")
+
+    # additional aircraft details
+    aircraft_type = models.CharField(max_length=30, blank=True, default="")
+    aircraft_full_type = models.CharField(max_length=60, blank=True, default="")
