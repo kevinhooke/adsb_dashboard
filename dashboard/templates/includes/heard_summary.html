@@ -4,6 +4,7 @@
         <th>Date/time received</th>
         <th>hex id</th>
         <th>Callsign</th>
+        <th>Type</th>
         <th>Squawk</th>
     </thead>
 {% for message in latest_sbs_messages %}
@@ -11,6 +12,7 @@
         <td>{{ message.date_message_generated}} {{ message.time_message_generated}}</td>
         <td>{{ message.hex_ident }}</td>
         <td>{{ message.callsign }}</td>
+        <td>{{ message.aircraft_type }}</td>
         <td>{{ message.squawk }}</td>
     </tr>
 {% endfor %}
