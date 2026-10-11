@@ -95,6 +95,7 @@ DATABASES = {
         "NAME": environ.get("DB_NAME", "adsb_dashboard"),
         "USER": environ.get("DB_USER", "admin"),
         "PASSWORD": environ["DB_PASSWORD"],
+        "CONN_MAX_AGE": 60,
     }
 }
 

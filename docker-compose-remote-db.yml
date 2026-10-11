@@ -10,10 +10,12 @@ services:
 
   web:
     image: 10.0.10.2:5000/adsb-dashboard:latest
+    command: ["poetry", "run", "gunicorn", "adsb_dashboard.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "2"]
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: ${DB_HOST:-10.0.10.5}
       DB_NAME: ${DB_NAME:-adsb_dashboard}
+      DEBUG: "False"
     ports:
       - 8001:8001
     restart: unless-stopped
