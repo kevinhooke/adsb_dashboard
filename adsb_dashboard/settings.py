@@ -96,7 +96,8 @@ DATABASES = {
         "NAME": environ.get("DB_NAME", "adsb_dashboard"),
         "USER": environ.get("DB_USER", "admin"),
         "PASSWORD": environ["DB_PASSWORD"],
-        "CONN_MAX_AGE": 60,
+        # keep 0 under runserver: it spawns a thread per request, so persistent connections leak
+        "CONN_MAX_AGE": int(environ.get("DB_CONN_MAX_AGE", "0")),
     }
 }
 
