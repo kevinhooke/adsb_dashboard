@@ -10,7 +10,7 @@ services:
 
   web:
     image: 10.0.10.2:5000/adsb-dashboard:latest
-    command: ["poetry", "run", "gunicorn", "adsb_dashboard.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "2"]
+    command: ["poetry", "run", "gunicorn", "adsb_dashboard.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "2", "--worker-class", "gthread", "--threads", "4"]
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: ${DB_HOST:-10.0.10.5}
