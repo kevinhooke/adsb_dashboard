@@ -37,6 +37,9 @@ COPY . /app/
 # install deps
 RUN poetry install --no-root
 
+# settings.py requires DB_PASSWORD at import time; collectstatic doesn't touch the DB
+RUN DB_PASSWORD=unused poetry run python manage.py collectstatic --noinput
+
 # Expose the Django port
 EXPOSE 8001
  
